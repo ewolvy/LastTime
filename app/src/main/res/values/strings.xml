@@ -1,0 +1,26 @@
+<resources>
+    <string name="app_name">Last Time</string>
+
+    <string name="title_task_detail">Task Detail</string>
+    <string name="button_see_all">See all</string>
+    <string name="button_add_task">Add task</string>
+    <string name="button_view_more">More</string>
+    <string name="lbl_reminders">Active reminders</string>
+    <string name="lbl_remind_from">Reminded since:</string>
+    <string name="lbl_last_time">Last time:</string>
+    <string name="lbl_edit_name">Task name:</string>
+    <string name="lbl_edit_last_date">Last date:</string>
+    <string name="lbl_edit_color">Color:</string>
+    <string name="lbl_edit_reminder">Remind in:</string>
+    <string name="lbl_edit_historic">Historic:</string>
+
+    <string name="trn_taskname" translatable="false">taskName</string>
+    <string name="trn_lastdate" translatable="false">lastDate</string>
+    <string name="trn_remindfrom" translatable="false">remindFrom</string>
+    <string name="trn_color" translatable="false">color</string>
+    <string name="action_delete_item">Task deleted</string>
+    <string name="action_undo">Undo?</string>
+
+    <!-- TODO: Remove or change this placeholder text -->
+    <string name="hello_blank_fragment">Hello blank fragment</string>
+</resources>

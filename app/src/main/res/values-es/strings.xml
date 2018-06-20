@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="app_name">Last Time</string>
+    <string name="button_see_all">Ver todos</string>
+    <string name="button_add_task">Añadir tarea</string>
+    <string name="button_view_more">Más</string>
+    <string name="lbl_reminders">Recordatorios activos</string>
+    <string name="lbl_remind_from">Recordado desde:</string>
+    <string name="lbl_last_time">Última vez:</string>
+    <string name="lbl_edit_name">Nombre de la tarea:</string>
+    <string name="lbl_edit_last_date">Última fecha:</string>
+    <string name="lbl_edit_color">Color:</string>
+    <string name="lbl_edit_reminder">Recordar en:</string>
+    <string name="lbl_edit_historic">Historial:</string>
+    <string name="action_delete_item">Tarea borrada</string>
+    <string name="action_undo">¿Deshacer?</string>
+</resources>

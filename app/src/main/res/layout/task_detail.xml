@@ -1,0 +1,143 @@
+<?xml version="1.0" encoding="utf-8"?>
+<android.support.constraint.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:minHeight="100dp"
+    android:minWidth="100dp"
+    tools:context=".view.TaskDetailFragment"
+    tools:layout_editor_absoluteY="81dp">
+
+    <TextView
+        android:id="@+id/lblEditReminder"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginBottom="8dp"
+        android:layout_marginStart="8dp"
+        android:layout_marginTop="8dp"
+        android:labelFor="@id/txtEditReminder"
+        android:text="@string/lbl_edit_reminder"
+        app:layout_constraintBottom_toBottomOf="@+id/txtEditReminder"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="@+id/txtEditReminder" />
+
+    <EditText
+        android:id="@+id/txtEditReminder"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_marginEnd="8dp"
+        android:layout_marginStart="8dp"
+        android:layout_marginTop="8dp"
+        android:ems="10"
+        android:inputType="date"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.0"
+        app:layout_constraintStart_toEndOf="@+id/lblEditLastDate"
+        app:layout_constraintTop_toBottomOf="@+id/btnEditColor"
+        tools:text="12/07/2018" />
+
+    <TextView
+        android:id="@+id/lblEditName"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="8dp"
+        android:layout_marginTop="16dp"
+        android:labelFor="@id/txtEditName"
+        android:text="@string/lbl_edit_name"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <EditText
+        android:id="@+id/txtEditName"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_marginEnd="8dp"
+        android:layout_marginStart="8dp"
+        android:layout_marginTop="8dp"
+        android:ems="10"
+        android:inputType="text"
+        app:layout_constraintBottom_toBottomOf="@+id/lblEditName"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toEndOf="@+id/lblEditName"
+        app:layout_constraintTop_toTopOf="@+id/lblEditName"
+        tools:text="Cambiar aceite" />
+
+    <TextView
+        android:id="@+id/lblEditLastDate"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginBottom="8dp"
+        android:layout_marginStart="8dp"
+        android:layout_marginTop="8dp"
+        android:labelFor="@id/txtEditLastDate"
+        android:text="@string/lbl_edit_last_date"
+        app:layout_constraintBottom_toBottomOf="@+id/txtEditLastDate"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="@+id/txtEditLastDate" />
+
+    <EditText
+        android:id="@+id/txtEditLastDate"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_marginEnd="8dp"
+        android:layout_marginStart="8dp"
+        android:layout_marginTop="8dp"
+        android:ems="10"
+        android:inputType="date"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toEndOf="@+id/lblEditLastDate"
+        app:layout_constraintTop_toBottomOf="@+id/txtEditName"
+        tools:text="12/07/2017" />
+
+    <TextView
+        android:id="@+id/lblEditColor"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginBottom="8dp"
+        android:layout_marginStart="8dp"
+        android:layout_marginTop="8dp"
+        android:text="@string/lbl_edit_color"
+        app:layout_constraintBottom_toBottomOf="@+id/btnEditColor"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="@+id/btnEditColor" />
+
+    <Button
+        android:id="@+id/btnEditColor"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_marginEnd="8dp"
+        android:layout_marginStart="32dp"
+        android:layout_marginTop="8dp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toEndOf="@+id/lblEditColor"
+        app:layout_constraintTop_toBottomOf="@+id/txtEditLastDate" />
+
+    <TextView
+        android:id="@+id/lblEditHistoric"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="8dp"
+        android:layout_marginTop="24dp"
+        android:labelFor="@id/txtEditHistoric"
+        android:text="@string/lbl_edit_historic"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/txtEditReminder" />
+
+    <EditText
+        android:id="@+id/txtEditHistoric"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginEnd="8dp"
+        android:layout_marginStart="8dp"
+        android:layout_marginTop="8dp"
+        android:gravity="top"
+        android:inputType="none"
+        android:singleLine="false"
+        android:textIsSelectable="true"
+        android:textAlignment="gravity"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/lblEditHistoric"
+        tools:text="12/07/2017" />
+</android.support.constraint.ConstraintLayout>
