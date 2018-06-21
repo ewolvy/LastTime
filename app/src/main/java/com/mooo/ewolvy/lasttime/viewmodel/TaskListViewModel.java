@@ -3,6 +3,7 @@ package com.mooo.ewolvy.lasttime.viewmodel;
 import android.app.Application;
 import android.arch.lifecycle.AndroidViewModel;
 import android.arch.lifecycle.LiveData;
+import android.graphics.Color;
 
 import com.mooo.ewolvy.lasttime.data.TaskDao;
 import com.mooo.ewolvy.lasttime.data.TaskItem;
@@ -10,6 +11,7 @@ import com.mooo.ewolvy.lasttime.data.TasksDatabase;
 
 import java.util.ArrayList;
 import java.util.Calendar;
+import java.util.Date;
 import java.util.List;
 
 public class TaskListViewModel extends AndroidViewModel {
@@ -38,5 +40,9 @@ public class TaskListViewModel extends AndroidViewModel {
         }
 
         return remindedTasks;
+    }
+
+    public void addDummyTask(TaskItem task){
+        mTaskDao.addTask(task);
     }
 }

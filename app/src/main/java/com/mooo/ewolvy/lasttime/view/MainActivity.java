@@ -4,6 +4,8 @@ import android.arch.lifecycle.Observer;
 import android.arch.lifecycle.ViewModelProviders;
 import android.content.Context;
 import android.content.Intent;
+import android.graphics.Color;
+import android.os.AsyncTask;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.support.design.widget.FloatingActionButton;
@@ -23,6 +25,8 @@ import com.mooo.ewolvy.lasttime.R;
 import com.mooo.ewolvy.lasttime.data.TaskItem;
 import com.mooo.ewolvy.lasttime.viewmodel.TaskListViewModel;
 
+import java.util.Calendar;
+import java.util.Date;
 import java.util.List;
 
 public class MainActivity extends AppCompatActivity {
@@ -33,6 +37,7 @@ public class MainActivity extends AppCompatActivity {
      */
     private boolean mTwoPane;
     private List<TaskItem> mValues;
+    private TaskListViewModel taskListViewModel;
     SimpleItemRecyclerViewAdapter adapter;
 
     @Override
@@ -61,7 +66,7 @@ public class MainActivity extends AppCompatActivity {
         mTwoPane = findViewById(R.id.task_detail_container) != null;
 
         // Create a TaskListViewModel instance
-        TaskListViewModel taskListViewModel = ViewModelProviders.of(this).get(TaskListViewModel.class);
+        taskListViewModel = ViewModelProviders.of(this).get(TaskListViewModel.class);
         // Get the task list and set the task list for the adapter
         taskListViewModel.getAllTasks().observe(this, new Observer<List<TaskItem>>() {
             @Override
@@ -70,10 +75,30 @@ public class MainActivity extends AppCompatActivity {
             }
         });
 
+
+        // POR SI SE QUIERE AÑADIR ALGÚN DATO A LA BASE DE DATOS DE FORMA DIRECTA
+        // TAMBIÉN HAY QUE DESOMENTAR LA CLASE ASYNCDATABASEADDDUMMY Y CAMBIAR LOS DATOS A AÑADIR
+        //new AsyncDatabaseAddDummy().execute();
+
         RecyclerView recyclerView = findViewById(R.id.task_list);
         assert recyclerView != null;
         setupRecyclerView(recyclerView, taskListViewModel);
     }
+
+
+
+    // POR SI SE QUIERE AÑADIR ALGÚN DATO A LA BASE DE DATOS DE FORMA DIRECTA
+    // TAMBIÉN HAY QUE DESCOMENTAR LA LINEA EN EL ONCREATE()
+    /*private class AsyncDatabaseAddDummy extends AsyncTask<Void, Void, Void>{
+        @Override
+        protected Void doInBackground(Void... voids) {
+            Date date = Calendar.getInstance().getTime();
+            TaskItem prueba = new TaskItem(3, "Cambiar antimosquitos", Color.LTGRAY, "", date, date, 3);
+            taskListViewModel.addDummyTask(prueba);
+
+            return null;
+        }
+    }*/
 
     private void setupRecyclerView(@NonNull RecyclerView recyclerView, TaskListViewModel vm) {
         adapter = new SimpleItemRecyclerViewAdapter(this, vm.getRemindedTasks(), mTwoPane);
