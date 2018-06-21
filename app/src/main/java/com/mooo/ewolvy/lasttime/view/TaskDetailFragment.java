@@ -1,109 +1,79 @@
 package com.mooo.ewolvy.lasttime.view;
 
+import android.app.Activity;
+import android.arch.lifecycle.ViewModelProviders;
 import android.content.Context;
 import android.net.Uri;
 import android.os.Bundle;
+import android.support.annotation.NonNull;
+import android.support.design.widget.CollapsingToolbarLayout;
 import android.support.v4.app.Fragment;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Button;
+import android.widget.EditText;
 
 import com.mooo.ewolvy.lasttime.R;
+import com.mooo.ewolvy.lasttime.data.TaskItem;
 
-/**
- * A simple {@link Fragment} subclass.
- * Activities that contain this fragment must implement the
- * {@link TaskDetailFragment.OnFragmentInteractionListener} interface
- * to handle interaction events.
- * Use the {@link TaskDetailFragment#newInstance} factory method to
- * create an instance of this fragment.
- */
 public class TaskDetailFragment extends Fragment {
-    // TODO: Rename parameter arguments, choose names that match
-    // the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
-    private static final String ARG_PARAM1 = "param1";
-    private static final String ARG_PARAM2 = "param2";
-
-    // TODO: Rename and change types of parameters
-    private String mParam1;
-    private String mParam2;
-
-    private OnFragmentInteractionListener mListener;
-
-    public TaskDetailFragment() {
-        // Required empty public constructor
-    }
+    /**
+     * The fragment argument representing the item ID that this fragment
+     * represents.
+     */
+    public static final String ARG_ITEM_ID = "item_id";
 
     /**
-     * Use this factory method to create a new instance of
-     * this fragment using the provided parameters.
-     *
-     * @param param1 Parameter 1.
-     * @param param2 Parameter 2.
-     * @return A new instance of fragment TaskDetailFragment.
+     * The dummy content this fragment is presenting.
      */
-    // TODO: Rename and change types and number of parameters
-    public static TaskDetailFragment newInstance(String param1, String param2) {
-        TaskDetailFragment fragment = new TaskDetailFragment();
-        Bundle args = new Bundle();
-        args.putString(ARG_PARAM1, param1);
-        args.putString(ARG_PARAM2, param2);
-        fragment.setArguments(args);
-        return fragment;
+    private TaskItem mItem;
+
+    /**
+     * Mandatory empty constructor for the fragment manager to instantiate the
+     * fragment (e.g. upon screen orientation changes).
+     */
+    public TaskDetailFragment() {
     }
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        if (getArguments() != null) {
-            mParam1 = getArguments().getString(ARG_PARAM1);
-            mParam2 = getArguments().getString(ARG_PARAM2);
+
+        assert getArguments() != null;
+        if (getArguments().containsKey(ARG_ITEM_ID)) {
+            // Load the dummy content specified by the fragment
+            // arguments. In a real-world scenario, use a Loader
+            // to load content from a content provider.
+            //mItem = DummyContent.ITEM_MAP.get(getArguments().getString(ARG_ITEM_ID));
+
+            /*TaskListViewModel tasksViewModel = ViewModelProviders.of(this).get(TaskListViewModel.class);
+            mItem = tasksViewModel.getItemById(getArguments().getString(ARG_ITEM_ID));*/
+
+            Activity activity = this.getActivity();
+            assert activity != null;
+            CollapsingToolbarLayout appBarLayout = activity.findViewById(R.id.toolbar_layout);
+            if (appBarLayout != null) {
+                appBarLayout.setTitle(mItem.getName());
+            }
         }
     }
 
     @Override
-    public View onCreateView(LayoutInflater inflater, ViewGroup container,
+    public View onCreateView(@NonNull LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
-        // Inflate the layout for this fragment
-        return inflater.inflate(R.layout.task_detail, container, false);
-    }
+        View rootView = inflater.inflate(R.layout.task_detail, container, false);
+        EditText editText = rootView.findViewById(R.id.txtEditName);
+        editText.setText(mItem.getName());
+        editText = rootView.findViewById(R.id.txtEditLastDate);
+        editText.setText(mItem.getLastTime().toString());
+        Button button = rootView.findViewById(R.id.btnEditColor);
+        button.setBackgroundColor(mItem.getColor());
+        editText = rootView.findViewById(R.id.txtEditReminder);
+        editText.setText(mItem.getRemindOn().toString());
 
-    // TODO: Rename method, update argument and hook method into UI event
-    public void onButtonPressed(Uri uri) {
-        if (mListener != null) {
-            mListener.onFragmentInteraction(uri);
-        }
-    }
-
-    @Override
-    public void onAttach(Context context) {
-        super.onAttach(context);
-        if (context instanceof OnFragmentInteractionListener) {
-            mListener = (OnFragmentInteractionListener) context;
-        } else {
-            throw new RuntimeException(context.toString()
-                    + " must implement OnFragmentInteractionListener");
-        }
-    }
-
-    @Override
-    public void onDetach() {
-        super.onDetach();
-        mListener = null;
-    }
-
-    /**
-     * This interface must be implemented by activities that contain this
-     * fragment to allow an interaction in this fragment to be communicated
-     * to the activity and potentially other fragments contained in that
-     * activity.
-     * <p>
-     * See the Android Training lesson <a href=
-     * "http://developer.android.com/training/basics/fragments/communicating.html"
-     * >Communicating with Other Fragments</a> for more information.
-     */
-    public interface OnFragmentInteractionListener {
-        // TODO: Update argument type and name
-        void onFragmentInteraction(Uri uri);
+        editText = rootView.findViewById(R.id.txtEditHistoric);
+        editText.setText(mItem.getDatesHistory());
+        return rootView;
     }
 }

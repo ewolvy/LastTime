@@ -4,18 +4,20 @@ import android.arch.persistence.room.Entity;
 import android.arch.persistence.room.Index;
 import android.arch.persistence.room.PrimaryKey;
 
-@Entity (tableName = "tasks", indices = {@Index(value = "position", unique = true)})
+import java.util.Date;
+
+@Entity (tableName = "tasks")
 public class TaskItem {
     @PrimaryKey(autoGenerate = true)
     private int id;
     private String name;
     private int color;
     private String datesHistory;
-    private String lastTime;
-    private String remindOn;
+    private Date lastTime;
+    private Date remindOn;
     private int position;
 
-    public TaskItem(int id, String name, int color, String datesHistory, String lastTime, String remindOn, int position) {
+    public TaskItem(int id, String name, int color, String datesHistory, Date lastTime, Date remindOn, int position) {
         this.id = id;
         this.name = name;
         this.color = color;
@@ -41,11 +43,11 @@ public class TaskItem {
         return datesHistory;
     }
 
-    public String getLastTime() {
+    public Date getLastTime() {
         return lastTime;
     }
 
-    public String getRemindOn() {
+    public Date getRemindOn() {
         return remindOn;
     }
 
@@ -65,12 +67,12 @@ public class TaskItem {
         this.datesHistory = datesHistory;
     }
 
-    public void setLastTime(String lastTime) {
-        addToHistory(lastTime);
+    public void setLastTime(Date lastTime) {
+        addToHistory(lastTime.toString());
         this.lastTime = lastTime;
     }
 
-    public void setRemindOn(String remindOn) {
+    public void setRemindOn(Date remindOn) {
         this.remindOn = remindOn;
     }
 
