@@ -24,10 +24,8 @@ public class TaskDetailFragment extends Fragment {
      */
     public static final String ARG_ITEM_ID = "item_id";
 
-    /**
-     * The dummy content this fragment is presenting.
-     */
     private TaskItem mItem;
+    private boolean mIsNewItem;
 
     /**
      * Mandatory empty constructor for the fragment manager to instantiate the
@@ -42,10 +40,9 @@ public class TaskDetailFragment extends Fragment {
 
         assert getArguments() != null;
         if (getArguments().containsKey(ARG_ITEM_ID)) {
-            // Load the dummy content specified by the fragment
-            // arguments. In a real-world scenario, use a Loader
-            // to load content from a content provider.
-            //mItem = DummyContent.ITEM_MAP.get(getArguments().getString(ARG_ITEM_ID));
+            // Load the content specified by the fragment
+            // arguments.
+            // mItem = DummyContent.ITEM_MAP.get(getArguments().getString(ARG_ITEM_ID));
 
             /*TaskListViewModel tasksViewModel = ViewModelProviders.of(this).get(TaskListViewModel.class);
             mItem = tasksViewModel.getItemById(getArguments().getString(ARG_ITEM_ID));*/

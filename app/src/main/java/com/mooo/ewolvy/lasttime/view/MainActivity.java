@@ -1,5 +1,6 @@
 package com.mooo.ewolvy.lasttime.view;
 
+import android.annotation.SuppressLint;
 import android.arch.lifecycle.Observer;
 import android.arch.lifecycle.ViewModelProviders;
 import android.content.Context;
@@ -25,6 +26,8 @@ import com.mooo.ewolvy.lasttime.R;
 import com.mooo.ewolvy.lasttime.data.TaskItem;
 import com.mooo.ewolvy.lasttime.viewmodel.TaskListViewModel;
 
+import java.text.DateFormat;
+import java.text.SimpleDateFormat;
 import java.util.Calendar;
 import java.util.Date;
 import java.util.List;
@@ -53,6 +56,7 @@ public class MainActivity extends AppCompatActivity {
         fab.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
+                // TODO: Call detail fragment or activity to create a new item
                 Snackbar.make(view, "Replace with your own action", Snackbar.LENGTH_LONG)
                         .setAction("Action", null).show();
             }
@@ -78,7 +82,7 @@ public class MainActivity extends AppCompatActivity {
 
         // POR SI SE QUIERE AÑADIR ALGÚN DATO A LA BASE DE DATOS DE FORMA DIRECTA
         // TAMBIÉN HAY QUE DESOMENTAR LA CLASE ASYNCDATABASEADDDUMMY Y CAMBIAR LOS DATOS A AÑADIR
-        //new AsyncDatabaseAddDummy().execute();
+        // new AsyncDatabaseAddDummy().execute();
 
         RecyclerView recyclerView = findViewById(R.id.task_list);
         assert recyclerView != null;
@@ -92,8 +96,13 @@ public class MainActivity extends AppCompatActivity {
     /*private class AsyncDatabaseAddDummy extends AsyncTask<Void, Void, Void>{
         @Override
         protected Void doInBackground(Void... voids) {
+            TaskItem prueba;
             Date date = Calendar.getInstance().getTime();
-            TaskItem prueba = new TaskItem(3, "Cambiar antimosquitos", Color.LTGRAY, "", date, date, 3);
+            prueba = new TaskItem(1, "Limpiar filtros lavavajillas", Color.CYAN, "", date, date, 1);
+            taskListViewModel.addDummyTask(prueba);
+            prueba = new TaskItem(2, "Comprobar presión ruedas", Color.YELLOW, "", date, date, 2);
+            taskListViewModel.addDummyTask(prueba);
+            prueba = new TaskItem(3, "Cambiar antimosquitos", Color.LTGRAY, "", date, date, 3);
             taskListViewModel.addDummyTask(prueba);
 
             return null;
@@ -156,9 +165,12 @@ public class MainActivity extends AppCompatActivity {
 
         @Override
         public void onBindViewHolder(@NonNull final ViewHolder holder, int position) {
+            @SuppressLint("SimpleDateFormat")
+            DateFormat df = new SimpleDateFormat("dd/MM/yyyy");
+
             holder.mNameView.setText(mValues.get(position).getName());
-            holder.mDateReminder.setText(mValues.get(position).getRemindOn().toString());
-            holder.mLastTime.setText(mValues.get(position).getLastTime().toString());
+            holder.mDateReminder.setText(df.format(mValues.get(position).getRemindOn()));
+            holder.mLastTime.setText(df.format(mValues.get(position).getLastTime()));
             holder.mView.setBackgroundColor(mValues.get(position).getColor());
 
             holder.itemView.setTag(mValues.get(position));
