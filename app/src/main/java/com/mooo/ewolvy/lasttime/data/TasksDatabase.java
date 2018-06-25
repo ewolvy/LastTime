@@ -9,7 +9,7 @@ import android.content.Context;
 @Database(entities = {TaskItem.class}, version = 1)
 @TypeConverters(DateConverter.class)
 public abstract class TasksDatabase extends RoomDatabase {
-    private static final String DATABASE_NAME = "tasks";
+    /*private static final String DATABASE_NAME = "tasks";
 
     private static final Object LOCK = new Object();
     private static volatile TasksDatabase sInstance;
@@ -24,7 +24,7 @@ public abstract class TasksDatabase extends RoomDatabase {
             }
         }
         return sInstance;
-    }
+    }*/
 
     public abstract TaskDao taskDao();
 }
