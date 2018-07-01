@@ -7,6 +7,7 @@ import android.arch.persistence.room.Room;
 import com.mooo.ewolvy.lasttime.data.TaskDao;
 import com.mooo.ewolvy.lasttime.data.TaskRepository;
 import com.mooo.ewolvy.lasttime.data.TasksDatabase;
+import com.mooo.ewolvy.lasttime.viewmodel.CustomViewModelFactory;
 
 import javax.inject.Singleton;
 
@@ -45,4 +46,5 @@ public class RoomModule {
     @Singleton
     ViewModelProvider.Factory provideViewModelFactory(TaskRepository repository){
         return new CustomViewModelFactory(repository);
-    }}
+    }
+}
