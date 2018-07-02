@@ -8,21 +8,26 @@ import android.os.AsyncTask;
 import com.mooo.ewolvy.lasttime.data.TaskItem;
 import com.mooo.ewolvy.lasttime.data.TaskRepository;
 
+import java.util.Date;
 import java.util.List;
 
 public class TaskListViewModel extends ViewModel {
+
     private TaskRepository repository;
 
     public LiveData<List<TaskItem>> getAllTasks(){
         return repository.getAllTasks();
     }
 
+    public LiveData<List<TaskItem>> getRemindedTasks() {
+        return repository.getRemindedTasks(new Date());
+    }
+
     @SuppressLint("StaticFieldLeak")
-    private class DeleteTask extends AsyncTask<TaskItem, Void, Void>{
+    private class DeleteTask extends AsyncTask<TaskItem, Void, Long>{
         @Override
-        protected Void doInBackground(TaskItem... taskItems) {
-            repository.deleteTask(taskItems);
-            return null;
+        protected Long doInBackground(TaskItem... taskItems) {
+            return repository.deleteTask(taskItems);
         }
     }
 

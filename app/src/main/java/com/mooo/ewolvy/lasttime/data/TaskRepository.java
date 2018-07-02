@@ -2,6 +2,7 @@ package com.mooo.ewolvy.lasttime.data;
 
 import android.arch.lifecycle.LiveData;
 
+import java.util.Date;
 import java.util.List;
 
 import javax.inject.Inject;
@@ -16,6 +17,10 @@ public class TaskRepository {
 
     public LiveData<List<TaskItem>> getAllTasks (){
         return taskDao.getAllTasks();
+    }
+
+    public LiveData<List<TaskItem>> getRemindedTasks (Date date) {
+        return taskDao.getRemindedTasks(date);
     }
 
     public LiveData<TaskItem> getTaskById (int id){

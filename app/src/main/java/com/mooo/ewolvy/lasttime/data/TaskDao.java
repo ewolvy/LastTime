@@ -7,6 +7,7 @@ import android.arch.persistence.room.Insert;
 import android.arch.persistence.room.Query;
 import android.arch.persistence.room.Update;
 
+import java.util.Date;
 import java.util.List;
 
 import static android.arch.persistence.room.OnConflictStrategy.REPLACE;
@@ -21,6 +22,9 @@ public interface TaskDao {
 
     @Query("SELECT * FROM tasks WHERE id = :id")
     LiveData<TaskItem> getTaskById(int id);
+
+    @Query("SELECT * FROM tasks WHERE remindOn < :date")
+    LiveData<List<TaskItem>> getRemindedTasks(Date date);
 
     @Update
     void updateTasks(TaskItem... items);

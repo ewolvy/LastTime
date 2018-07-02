@@ -1,12 +1,12 @@
 package com.mooo.ewolvy.lasttime.view;
 
 import android.annotation.SuppressLint;
+import android.app.FragmentManager;
 import android.arch.lifecycle.Observer;
+import android.arch.lifecycle.ViewModelProvider;
 import android.arch.lifecycle.ViewModelProviders;
 import android.content.Context;
 import android.content.Intent;
-import android.graphics.Color;
-import android.os.AsyncTask;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.support.design.widget.FloatingActionButton;
@@ -15,22 +15,21 @@ import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
-import android.support.v7.widget.Toolbar;
-import android.support.v7.widget.helper.ItemTouchHelper;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
 
+import com.mooo.ewolvy.lasttime.LastTimeApplication;
 import com.mooo.ewolvy.lasttime.R;
 import com.mooo.ewolvy.lasttime.data.TaskItem;
 import com.mooo.ewolvy.lasttime.viewmodel.TaskListViewModel;
 
 import java.text.DateFormat;
 import java.text.SimpleDateFormat;
-import java.util.Calendar;
-import java.util.Date;
 import java.util.List;
+
+import javax.inject.Inject;
 
 public class MainActivity extends AppCompatActivity {
 
@@ -39,18 +38,29 @@ public class MainActivity extends AppCompatActivity {
      * device.
      */
     private boolean mTwoPane;
-    private List<TaskItem> mValues;
+    private List<TaskItem> listOfData;
     private TaskListViewModel taskListViewModel;
     SimpleItemRecyclerViewAdapter adapter;
+
+    @Inject
+    ViewModelProvider.Factory viewModelFactory;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
-        /*Toolbar toolbar = findViewById(R.id.toolbar);
-        setSupportActionBar(toolbar);
-        toolbar.setTitle(getTitle());*/
+        FragmentManager manager = getSupportFragmentManager();
+
+
+        if (savedInstanceState == null) {
+            // Create the detail fragment and add it to the activity
+            // using a fragment transaction.
+            ListFragment fragment = new ListFragment();
+            getSupportFragmentManager().beginTransaction()
+                    .add(R.id.frameLayout, fragment)
+                    .commit();
+        }
 
         FloatingActionButton fab = findViewById(R.id.fab);
         fab.setOnClickListener(new View.OnClickListener() {
@@ -63,21 +73,23 @@ public class MainActivity extends AppCompatActivity {
         });
 
 
-        // The detail container view will be present only in the
-        // large-screen layouts (res/values-w900dp).
-        // If this view is present, then the
-        // activity should be in two-pane mode.
-        mTwoPane = findViewById(R.id.task_detail_container) != null;
 
-        // Create a TaskListViewModel instance
-        taskListViewModel = ViewModelProviders.of(this).get(TaskListViewModel.class);
-        // Get the task list and set the task list for the adapter
-        taskListViewModel.getAllTasks().observe(this, new Observer<List<TaskItem>>() {
-            @Override
-            public void onChanged(@Nullable List<TaskItem> tasks) {
-                adapter.setTaskList(tasks);
-            }
-        });
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 
         // POR SI SE QUIERE AÑADIR ALGÚN DATO A LA BASE DE DATOS DE FORMA DIRECTA
@@ -88,7 +100,6 @@ public class MainActivity extends AppCompatActivity {
         assert recyclerView != null;
         setupRecyclerView(recyclerView, taskListViewModel);
     }
-
 
 
     // POR SI SE QUIERE AÑADIR ALGÚN DATO A LA BASE DE DATOS DE FORMA DIRECTA
@@ -108,6 +119,9 @@ public class MainActivity extends AppCompatActivity {
             return null;
         }
     }*/
+
+
+
 
     private void setupRecyclerView(@NonNull RecyclerView recyclerView, TaskListViewModel vm) {
         adapter = new SimpleItemRecyclerViewAdapter(this, vm.getRemindedTasks(), mTwoPane);
@@ -150,7 +164,7 @@ public class MainActivity extends AppCompatActivity {
         SimpleItemRecyclerViewAdapter(MainActivity parent,
                                       List<TaskItem> items,
                                       boolean twoPane) {
-            mValues = items;
+            listOfData = items;
             mParentActivity = parent;
             mTwoPane = twoPane;
         }
@@ -168,23 +182,23 @@ public class MainActivity extends AppCompatActivity {
             @SuppressLint("SimpleDateFormat")
             DateFormat df = new SimpleDateFormat("dd/MM/yyyy");
 
-            holder.mNameView.setText(mValues.get(position).getName());
-            holder.mDateReminder.setText(df.format(mValues.get(position).getRemindOn()));
-            holder.mLastTime.setText(df.format(mValues.get(position).getLastTime()));
-            holder.mView.setBackgroundColor(mValues.get(position).getColor());
+            holder.mNameView.setText(listOfData.get(position).getName());
+            holder.mDateReminder.setText(df.format(listOfData.get(position).getRemindOn()));
+            holder.mLastTime.setText(df.format(listOfData.get(position).getLastTime()));
+            holder.mView.setBackgroundColor(listOfData.get(position).getColor());
 
-            holder.itemView.setTag(mValues.get(position));
+            holder.itemView.setTag(listOfData.get(position));
             holder.itemView.setOnClickListener(mOnClickListener);
         }
 
         @Override
         public int getItemCount() {
-            return mValues.size();
+            return listOfData.size();
         }
 
         public void setTaskList (List<TaskItem> newTaskList){
             if (newTaskList != null){
-                mValues = newTaskList;
+                listOfData = newTaskList;
                 notifyDataSetChanged();
             }
         }
