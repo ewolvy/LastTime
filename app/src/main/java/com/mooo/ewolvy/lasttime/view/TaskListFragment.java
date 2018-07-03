@@ -9,12 +9,12 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
+import android.support.design.widget.FloatingActionButton;
+import android.support.design.widget.Snackbar;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentActivity;
-import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
-import android.support.v7.widget.Toolbar;
 import android.support.v7.widget.helper.ItemTouchHelper;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -33,7 +33,7 @@ import java.util.Objects;
 
 import javax.inject.Inject;
 
-public class ListFragment extends Fragment {
+public class TaskListFragment extends Fragment {
 
     private List<TaskItem> listOfData;
     private TaskListViewModel taskListViewModel;
@@ -48,12 +48,12 @@ public class ListFragment extends Fragment {
      * Whether or not the activity is in two-pane mode, i.e. running on a tablet
      * device.
      */
-    private boolean mTwoPane;
+    public boolean mTwoPane;
 
-    public ListFragment(){}
+    public TaskListFragment(){}
 
-    public static ListFragment newInstance() {
-        return new ListFragment();
+    public static TaskListFragment newInstance() {
+        return new TaskListFragment();
     }
 
     @Override
@@ -100,6 +100,28 @@ public class ListFragment extends Fragment {
 
         recyclerView = view.findViewById(R.id.task_list);
 
+        FloatingActionButton fab = view.findViewById(R.id.fab);
+        fab.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                // TODO: Call detail fragment or activity to create a new item
+                /*Snackbar.make(view, "Replace with your own action", Snackbar.LENGTH_LONG)
+                        .setAction("Action", null).show();*/
+                if (mTwoPane) {
+                    TaskDetailFragment fragment = new TaskDetailFragment();
+                    assert getFragmentManager() != null;
+                    getFragmentManager().beginTransaction()
+                            .replace(R.id.task_detail_container, fragment)
+                            .commit();
+                } else {
+                    Context context = view.getContext();
+                    Intent intent = new Intent(context, TaskDetailActivity.class);
+
+                    context.startActivity(intent);
+                }
+            }
+        });
+
         return view;
     }
 
@@ -119,7 +141,8 @@ public class ListFragment extends Fragment {
 
     // POR SI SE QUIERE AÑADIR ALGÚN DATO A LA BASE DE DATOS DE FORMA DIRECTA
     // TAMBIÉN HAY QUE DESCOMENTAR LA LINEA EN EL ONCREATE()
-    /*private class AsyncDatabaseAddDummy extends AsyncTask<Void, Void, Void>{
+    /*@SuppressLint("StaticFieldLeak")
+    private class AsyncDatabaseAddDummy extends AsyncTask<Void, Void, Void> {
         @Override
         protected Void doInBackground(Void... voids) {
             TaskItem prueba;
@@ -134,7 +157,6 @@ public class ListFragment extends Fragment {
             return null;
         }
     }*/
-
 
     private class SimpleItemRecyclerViewAdapter
             extends RecyclerView.Adapter<SimpleItemRecyclerViewAdapter.ViewHolder> {
@@ -197,12 +219,12 @@ public class ListFragment extends Fragment {
             return listOfData.size();
         }
 
-        public void setTaskList (List<TaskItem> newTaskList){
+        /*public void setTaskList (List<TaskItem> newTaskList){
             if (newTaskList != null){
                 listOfData = newTaskList;
                 notifyDataSetChanged();
             }
-        }
+        }*/
 
         class ViewHolder extends RecyclerView.ViewHolder {
             final TextView mNameView;
