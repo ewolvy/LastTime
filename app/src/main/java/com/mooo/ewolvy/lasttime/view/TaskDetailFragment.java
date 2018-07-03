@@ -1,6 +1,8 @@
 package com.mooo.ewolvy.lasttime.view;
 
 import android.app.Activity;
+import android.arch.lifecycle.LiveData;
+import android.arch.lifecycle.ViewModel;
 import android.arch.lifecycle.ViewModelProviders;
 import android.content.Context;
 import android.net.Uri;
@@ -16,6 +18,9 @@ import android.widget.EditText;
 
 import com.mooo.ewolvy.lasttime.R;
 import com.mooo.ewolvy.lasttime.data.TaskItem;
+import com.mooo.ewolvy.lasttime.viewmodel.TaskEditViewModel;
+
+import java.util.Objects;
 
 public class TaskDetailFragment extends Fragment {
     /**
@@ -24,7 +29,7 @@ public class TaskDetailFragment extends Fragment {
      */
     public static final String ARG_ITEM_ID = "item_id";
 
-    private TaskItem mItem;
+    private LiveData<TaskItem> mItem;
     private boolean mIsNewItem;
 
     /**
@@ -42,16 +47,15 @@ public class TaskDetailFragment extends Fragment {
         if (getArguments().containsKey(ARG_ITEM_ID)) {
             // Load the content specified by the fragment
             // arguments.
-            // mItem = DummyContent.ITEM_MAP.get(getArguments().getString(ARG_ITEM_ID));
 
-            /*TaskListViewModel tasksViewModel = ViewModelProviders.of(this).get(TaskListViewModel.class);
-            mItem = tasksViewModel.getItemById(getArguments().getString(ARG_ITEM_ID));*/
+            TaskEditViewModel teViewModel = ViewModelProviders.of(this).get(TaskEditViewModel.class);
+            mItem = teViewModel.getTaskById(getArguments().getInt(ARG_ITEM_ID));
 
             Activity activity = this.getActivity();
             assert activity != null;
             CollapsingToolbarLayout appBarLayout = activity.findViewById(R.id.toolbar_layout);
             if (appBarLayout != null) {
-                appBarLayout.setTitle(mItem.getName());
+                appBarLayout.setTitle(Objects.requireNonNull(mItem.getValue()).getName());
             }
         }
     }
@@ -61,16 +65,16 @@ public class TaskDetailFragment extends Fragment {
                              Bundle savedInstanceState) {
         View rootView = inflater.inflate(R.layout.task_detail, container, false);
         EditText editText = rootView.findViewById(R.id.txtEditName);
-        editText.setText(mItem.getName());
+        editText.setText(Objects.requireNonNull(mItem.getValue()).getName());
         editText = rootView.findViewById(R.id.txtEditLastDate);
-        editText.setText(mItem.getLastTime().toString());
+        editText.setText(mItem.getValue().getLastTime().toString());
         Button button = rootView.findViewById(R.id.btnEditColor);
-        button.setBackgroundColor(mItem.getColor());
+        button.setBackgroundColor(mItem.getValue().getColor());
         editText = rootView.findViewById(R.id.txtEditReminder);
-        editText.setText(mItem.getRemindOn().toString());
+        editText.setText(mItem.getValue().getRemindOn().toString());
 
         editText = rootView.findViewById(R.id.txtEditHistoric);
-        editText.setText(mItem.getDatesHistory());
+        editText.setText(mItem.getValue().getDatesHistory());
         return rootView;
     }
 }

@@ -20,7 +20,7 @@ public class CustomViewModelFactory implements ViewModelProvider.Factory{
         if (modelClass.isAssignableFrom(TaskListViewModel.class)) {
             return (T) new TaskListViewModel(repository);
         } else if (modelClass.isAssignableFrom(TaskEditViewModel.class)) {
-            return (T) new TaskEditViewModel();
+            return (T) new TaskEditViewModel(repository);
         } else {
             throw new IllegalArgumentException("Viewmodel not found");
         }

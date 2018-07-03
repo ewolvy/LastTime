@@ -15,7 +15,7 @@ import static android.arch.persistence.room.OnConflictStrategy.REPLACE;
 @Dao
 public interface TaskDao {
     @Insert(onConflict = REPLACE)
-    Long addTask(TaskItem... item);
+    void addTask(TaskItem... item);
 
     @Query("SELECT * FROM tasks ORDER BY position")
     LiveData<List<TaskItem>> getAllTasks();
@@ -30,5 +30,5 @@ public interface TaskDao {
     void updateTasks(TaskItem... items);
 
     @Delete
-    Long deleteTask(TaskItem... items);
+    void deleteTask(TaskItem... items);
 }

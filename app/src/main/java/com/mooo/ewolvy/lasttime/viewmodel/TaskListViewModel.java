@@ -15,6 +15,10 @@ public class TaskListViewModel extends ViewModel {
 
     private TaskRepository repository;
 
+    public TaskListViewModel(TaskRepository repository) {
+        this.repository = repository;
+    }
+
     public LiveData<List<TaskItem>> getAllTasks(){
         return repository.getAllTasks();
     }
@@ -24,10 +28,11 @@ public class TaskListViewModel extends ViewModel {
     }
 
     @SuppressLint("StaticFieldLeak")
-    private class DeleteTask extends AsyncTask<TaskItem, Void, Long>{
+    private class DeleteTask extends AsyncTask<TaskItem, Void, Void>{
         @Override
-        protected Long doInBackground(TaskItem... taskItems) {
-            return repository.deleteTask(taskItems);
+        protected Void doInBackground(TaskItem... taskItems) {
+            repository.deleteTask(taskItems);
+            return null;
         }
     }
 
@@ -44,9 +49,6 @@ public class TaskListViewModel extends ViewModel {
     }
 */
 
-    public TaskListViewModel(TaskRepository repository) {
-        this.repository = repository;
-    }
 
 /*    public List<TaskItem> getRemindedTasks(){
         List<TaskItem> remindedTasks = new ArrayList<>();

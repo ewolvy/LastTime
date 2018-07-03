@@ -11,8 +11,10 @@ import com.mooo.ewolvy.lasttime.viewmodel.CustomViewModelFactory;
 
 import javax.inject.Singleton;
 
+import dagger.Module;
 import dagger.Provides;
 
+@Module
 public class RoomModule {
     private final TasksDatabase database;
 

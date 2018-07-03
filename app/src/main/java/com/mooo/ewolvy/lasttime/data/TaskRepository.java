@@ -27,12 +27,12 @@ public class TaskRepository {
         return taskDao.getTaskById(id);
     }
 
-    public Long deleteTask (TaskItem... items){
-        return taskDao.deleteTask(items);
+    public void deleteTask (TaskItem... items){
+        taskDao.deleteTask(items);
     }
 
-    public Long addTask (TaskItem... items){
-        return taskDao.addTask(items);
+    public void addTask (TaskItem... items){
+        taskDao.addTask(items);
     }
 
     public void updateTask (TaskItem... items){

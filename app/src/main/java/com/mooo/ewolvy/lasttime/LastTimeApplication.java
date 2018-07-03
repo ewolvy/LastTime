@@ -4,6 +4,7 @@ import android.app.Application;
 
 import com.mooo.ewolvy.lasttime.di.ApplicationComponent;
 import com.mooo.ewolvy.lasttime.di.ApplicationModule;
+import com.mooo.ewolvy.lasttime.di.DaggerApplicationComponent;
 import com.mooo.ewolvy.lasttime.di.RoomModule;
 
 public class LastTimeApplication extends Application {
