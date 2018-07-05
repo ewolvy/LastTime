@@ -6,6 +6,8 @@ import android.arch.lifecycle.ViewModelProvider;
 import android.arch.lifecycle.ViewModelProviders;
 import android.content.Context;
 import android.content.Intent;
+import android.graphics.Color;
+import android.os.AsyncTask;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
@@ -28,6 +30,8 @@ import com.mooo.ewolvy.lasttime.viewmodel.TaskListViewModel;
 
 import java.text.DateFormat;
 import java.text.SimpleDateFormat;
+import java.util.Calendar;
+import java.util.Date;
 import java.util.List;
 import java.util.Objects;
 
@@ -104,9 +108,6 @@ public class TaskListFragment extends Fragment {
         fab.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                // TODO: Call detail fragment or activity to create a new item
-                /*Snackbar.make(view, "Replace with your own action", Snackbar.LENGTH_LONG)
-                        .setAction("Action", null).show();*/
                 if (mTwoPane) {
                     TaskDetailFragment fragment = new TaskDetailFragment();
                     assert getFragmentManager() != null;
@@ -141,12 +142,13 @@ public class TaskListFragment extends Fragment {
 
     // POR SI SE QUIERE AÑADIR ALGÚN DATO A LA BASE DE DATOS DE FORMA DIRECTA
     // TAMBIÉN HAY QUE DESCOMENTAR LA LINEA EN EL ONCREATE()
-    /*@SuppressLint("StaticFieldLeak")
+    @SuppressLint("StaticFieldLeak")
     private class AsyncDatabaseAddDummy extends AsyncTask<Void, Void, Void> {
         @Override
         protected Void doInBackground(Void... voids) {
             TaskItem prueba;
             Date date = Calendar.getInstance().getTime();
+
             prueba = new TaskItem(1, "Limpiar filtros lavavajillas", Color.CYAN, "", date, date, 1);
             taskListViewModel.addDummyTask(prueba);
             prueba = new TaskItem(2, "Comprobar presión ruedas", Color.YELLOW, "", date, date, 2);
@@ -154,9 +156,30 @@ public class TaskListFragment extends Fragment {
             prueba = new TaskItem(3, "Cambiar antimosquitos", Color.LTGRAY, "", date, date, 3);
             taskListViewModel.addDummyTask(prueba);
 
+            prueba = new TaskItem(4, "Tratamiento antibichos", Color.BLUE, "", date, date, 4);
+            taskListViewModel.addDummyTask(prueba);
+            prueba = new TaskItem(5, "Pipeta Buffy", Color.GRAY, "", date, date, 5);
+            taskListViewModel.addDummyTask(prueba);
+            prueba = new TaskItem(6, "Limpiar baño", Color.MAGENTA, "", date, date, 6);
+            taskListViewModel.addDummyTask(prueba);
+
+            prueba = new TaskItem(7, "Cambiar sábanas", Color.CYAN, "", date, date, 7);
+            taskListViewModel.addDummyTask(prueba);
+            prueba = new TaskItem(8, "Comprobar título CFGS", Color.YELLOW, "", date, date, 8);
+            taskListViewModel.addDummyTask(prueba);
+            prueba = new TaskItem(9, "Quedar con Jose", Color.LTGRAY, "", date, date, 9);
+            taskListViewModel.addDummyTask(prueba);
+
+            prueba = new TaskItem(10, "Ir a Mercadona", Color.BLUE, "", date, date, 10);
+            taskListViewModel.addDummyTask(prueba);
+            prueba = new TaskItem(11, "Repetir queso", Color.GRAY, "", date, date, 11);
+            taskListViewModel.addDummyTask(prueba);
+            prueba = new TaskItem(12, "Quitar malas hierbas", Color.MAGENTA, "", date, date, 12);
+            taskListViewModel.addDummyTask(prueba);
+
             return null;
         }
-    }*/
+    }
 
     private class SimpleItemRecyclerViewAdapter
             extends RecyclerView.Adapter<SimpleItemRecyclerViewAdapter.ViewHolder> {

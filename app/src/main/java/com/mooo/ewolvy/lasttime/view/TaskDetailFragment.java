@@ -61,13 +61,14 @@ public class TaskDetailFragment extends Fragment {
                 .getApplicationComponent()
                 .inject(this);
 
-        assert getArguments() != null;
-        if (getArguments().containsKey(ARG_ITEM_ID)) {
-            // Load the content specified by the fragment
-            // arguments.
+        if (getArguments() != null) {
+            if (getArguments().containsKey(ARG_ITEM_ID)) {
+                // Load the content specified by the fragment
+                // arguments.
 
-            id = getArguments().getInt(ARG_ITEM_ID);
-            mIsNewItem = false;
+                id = getArguments().getInt(ARG_ITEM_ID);
+                mIsNewItem = false;
+            }
         }
     }
 
