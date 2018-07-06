@@ -36,6 +36,9 @@ dependencies {
     implementation "com.google.dagger:dagger-android:2.13"
     annotationProcessor "com.google.dagger:dagger-compiler:2.13"
 
+    //Color picker
+    implementation 'com.github.QuadFlask:colorpicker:0.0.13'
+
     testImplementation 'junit:junit:4.12'
     androidTestImplementation 'com.android.support.test:runner:1.0.2'
     androidTestImplementation 'com.android.support.test.espresso:espresso-core:3.0.2'

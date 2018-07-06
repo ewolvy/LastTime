@@ -7,6 +7,8 @@ import android.arch.lifecycle.ViewModel;
 import android.arch.lifecycle.ViewModelProvider;
 import android.arch.lifecycle.ViewModelProviders;
 import android.content.Context;
+import android.content.DialogInterface;
+import android.graphics.Color;
 import android.net.Uri;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
@@ -18,7 +20,12 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.Toast;
 
+import com.flask.colorpicker.ColorPickerView;
+import com.flask.colorpicker.OnColorSelectedListener;
+import com.flask.colorpicker.builder.ColorPickerClickListener;
+import com.flask.colorpicker.builder.ColorPickerDialogBuilder;
 import com.mooo.ewolvy.lasttime.LastTimeApplication;
 import com.mooo.ewolvy.lasttime.R;
 import com.mooo.ewolvy.lasttime.data.TaskItem;
@@ -96,6 +103,7 @@ public class TaskDetailFragment extends Fragment {
                             appBarLayout.setTitle(mItem.getName());
                         }
                     }
+                    prepareButton();
                 }
             });
         }
@@ -114,12 +122,62 @@ public class TaskDetailFragment extends Fragment {
         editText.setText(item.getName());
         editText = rootView.findViewById(R.id.txtEditLastDate);
         editText.setText(item.getLastTime().toString());
-        Button button = rootView.findViewById(R.id.btnEditColor);
-        button.setBackgroundColor(item.getColor());
         editText = rootView.findViewById(R.id.txtEditReminder);
         editText.setText(item.getRemindOn().toString());
 
         editText = rootView.findViewById(R.id.txtEditHistoric);
         editText.setText(item.getDatesHistory());
+    }
+
+    private void prepareButton (){
+        Button button = rootView.findViewById(R.id.btnEditColor);
+        final int initialColor;
+
+        if (!mIsNewItem) {
+            button.setBackgroundColor(mItem.getColor());
+            initialColor = mItem.getColor();
+        } else {
+            initialColor = Color.GRAY;
+        }
+
+        button.setOnClickListener(new View.OnClickListener(){
+            @Override
+            public void onClick(View v) {
+                ColorPickerDialogBuilder
+                        .with(Objects.requireNonNull(getContext()))
+                        .setTitle("Choose color")
+                        .initialColor(initialColor)
+                        .wheelType(ColorPickerView.WHEEL_TYPE.CIRCLE)
+                        .density(4)
+                        .setOnColorSelectedListener(new OnColorSelectedListener() {
+                            @Override
+                            public void onColorSelected(int selectedColor) {
+                                onColorSelectedCallback(selectedColor);
+                            }
+                        })
+                        .setPositiveButton("ok", new ColorPickerClickListener() {
+                            @Override
+                            public void onClick(DialogInterface dialog, int selectedColor, Integer[] allColors) {
+                                // changeBackgroundColor(selectedColor);
+                                Toast.makeText(getContext(), "onPositiveButton: 0x" + Integer.toHexString(selectedColor), Toast.LENGTH_LONG).show();
+                            }
+                        })
+                        .setNegativeButton("cancel", new DialogInterface.OnClickListener() {
+                            @Override
+                            public void onClick(DialogInterface dialog, int which) {
+                            }
+                        })
+                        .lightnessSliderOnly()
+                        .build()
+                        .show();
+            }
+        });
+    }
+
+    private void onColorSelectedCallback (int selectedColor){
+        mItem.setColor(selectedColor);
+        Button button = rootView.findViewById(R.id.btnEditColor);
+
+        button.setBackgroundColor(mItem.getColor());
     }
 }

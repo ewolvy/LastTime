@@ -100,6 +100,7 @@ public class TaskListFragment extends Fragment {
 
         // POR SI SE QUIERE AÑADIR ALGÚN DATO A LA BASE DE DATOS DE FORMA DIRECTA
         // TAMBIÉN HAY QUE DESOMENTAR LA CLASE ASYNCDATABASEADDDUMMY Y CAMBIAR LOS DATOS A AÑADIR
+
         // new AsyncDatabaseAddDummy().execute();
 
         recyclerView = view.findViewById(R.id.task_list);
@@ -142,6 +143,7 @@ public class TaskListFragment extends Fragment {
 
     // POR SI SE QUIERE AÑADIR ALGÚN DATO A LA BASE DE DATOS DE FORMA DIRECTA
     // TAMBIÉN HAY QUE DESCOMENTAR LA LINEA EN EL ONCREATE()
+
     @SuppressLint("StaticFieldLeak")
     private class AsyncDatabaseAddDummy extends AsyncTask<Void, Void, Void> {
         @Override
