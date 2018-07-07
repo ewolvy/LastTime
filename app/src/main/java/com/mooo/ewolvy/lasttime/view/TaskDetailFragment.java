@@ -147,7 +147,7 @@ public class TaskDetailFragment extends Fragment {
                         .with(Objects.requireNonNull(getContext()))
                         .setTitle("Choose color")
                         .initialColor(initialColor)
-                        .wheelType(ColorPickerView.WHEEL_TYPE.CIRCLE)
+                        .wheelType(ColorPickerView.WHEEL_TYPE.FLOWER)
                         .density(4)
                         .setOnColorSelectedListener(new OnColorSelectedListener() {
                             @Override
