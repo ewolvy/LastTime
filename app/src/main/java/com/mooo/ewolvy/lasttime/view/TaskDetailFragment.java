@@ -1,15 +1,12 @@
 package com.mooo.ewolvy.lasttime.view;
 
 import android.app.Activity;
-import android.arch.lifecycle.LiveData;
 import android.arch.lifecycle.Observer;
-import android.arch.lifecycle.ViewModel;
 import android.arch.lifecycle.ViewModelProvider;
 import android.arch.lifecycle.ViewModelProviders;
-import android.content.Context;
 import android.content.DialogInterface;
 import android.graphics.Color;
-import android.net.Uri;
+import android.graphics.PorterDuff;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
@@ -20,17 +17,14 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.EditText;
-import android.widget.Toast;
 
 import com.flask.colorpicker.ColorPickerView;
-import com.flask.colorpicker.OnColorSelectedListener;
 import com.flask.colorpicker.builder.ColorPickerClickListener;
 import com.flask.colorpicker.builder.ColorPickerDialogBuilder;
 import com.mooo.ewolvy.lasttime.LastTimeApplication;
 import com.mooo.ewolvy.lasttime.R;
 import com.mooo.ewolvy.lasttime.data.TaskItem;
 import com.mooo.ewolvy.lasttime.viewmodel.TaskEditViewModel;
-import com.mooo.ewolvy.lasttime.viewmodel.TaskListViewModel;
 
 import java.util.List;
 import java.util.Objects;
@@ -102,8 +96,8 @@ public class TaskDetailFragment extends Fragment {
                         if (appBarLayout != null && mItem != null) {
                             appBarLayout.setTitle(mItem.getName());
                         }
+                        prepareButton();
                     }
-                    prepareButton();
                 }
             });
         }
@@ -113,6 +107,9 @@ public class TaskDetailFragment extends Fragment {
     public View onCreateView(@NonNull LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         rootView = inflater.inflate(R.layout.task_detail, container, false);
+        if (mIsNewItem) {
+            prepareButton();
+        }
 
         return rootView;
     }
@@ -134,7 +131,9 @@ public class TaskDetailFragment extends Fragment {
         final int initialColor;
 
         if (!mIsNewItem) {
-            button.setBackgroundColor(mItem.getColor());
+            //button.setBackgroundColor(mItem.getColor());
+            button.getBackground().setColorFilter(mItem.getColor(), PorterDuff.Mode.MULTIPLY);
+
             initialColor = mItem.getColor();
         } else {
             initialColor = Color.GRAY;
@@ -149,22 +148,10 @@ public class TaskDetailFragment extends Fragment {
                         .initialColor(initialColor)
                         .wheelType(ColorPickerView.WHEEL_TYPE.FLOWER)
                         .density(4)
-                        .setOnColorSelectedListener(new OnColorSelectedListener() {
-                            @Override
-                            public void onColorSelected(int selectedColor) {
-                                onColorSelectedCallback(selectedColor);
-                            }
-                        })
                         .setPositiveButton("ok", new ColorPickerClickListener() {
                             @Override
                             public void onClick(DialogInterface dialog, int selectedColor, Integer[] allColors) {
-                                // changeBackgroundColor(selectedColor);
-                                Toast.makeText(getContext(), "onPositiveButton: 0x" + Integer.toHexString(selectedColor), Toast.LENGTH_LONG).show();
-                            }
-                        })
-                        .setNegativeButton("cancel", new DialogInterface.OnClickListener() {
-                            @Override
-                            public void onClick(DialogInterface dialog, int which) {
+                                onColorSelectedCallback(selectedColor);
                             }
                         })
                         .lightnessSliderOnly()
@@ -175,9 +162,11 @@ public class TaskDetailFragment extends Fragment {
     }
 
     private void onColorSelectedCallback (int selectedColor){
-        mItem.setColor(selectedColor);
-        Button button = rootView.findViewById(R.id.btnEditColor);
+        if (!mIsNewItem) {
+            mItem.setColor(selectedColor);
+        }
 
-        button.setBackgroundColor(mItem.getColor());
+        Button button = rootView.findViewById(R.id.btnEditColor);
+        button.getBackground().setColorFilter(selectedColor, PorterDuff.Mode.MULTIPLY);
     }
 }
