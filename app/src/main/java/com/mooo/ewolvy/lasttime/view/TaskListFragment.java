@@ -112,6 +112,9 @@ public class TaskListFragment extends Fragment {
                 if (mTwoPane) {
                     TaskDetailFragment fragment = new TaskDetailFragment();
                     assert getFragmentManager() != null;
+                    Bundle arguments = new Bundle();
+                    arguments.putInt(TaskDetailFragment.ARG_ITEM_ID, TaskDetailFragment.ARG_ITEM_ID_NEW_ITEM);
+                    fragment.setArguments(arguments);
                     getFragmentManager().beginTransaction()
                             .replace(R.id.task_detail_container, fragment)
                             .commit();
@@ -119,6 +122,7 @@ public class TaskListFragment extends Fragment {
                     Context context = view.getContext();
                     Intent intent = new Intent(context, TaskDetailActivity.class);
 
+                    intent.putExtra(TaskDetailFragment.ARG_ITEM_ID, TaskDetailFragment.ARG_ITEM_ID_NEW_ITEM);
                     context.startActivity(intent);
                 }
             }

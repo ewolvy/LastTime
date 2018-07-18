@@ -37,15 +37,16 @@ public class TaskDetailFragment extends Fragment {
      * represents.
      */
     public static final String ARG_ITEM_ID = "item_id";
+    public static final int ARG_ITEM_ID_NEW_ITEM = -1;
 
     @Inject
     ViewModelProvider.Factory viewModelFactory;
 
     private TaskEditViewModel taskEditViewModel;
     private View rootView;
-    private int id = -1;
+    private int id;
     private TaskItem mItem;
-    private boolean mIsNewItem = true;
+    private boolean mIsNewItem;
 
     /**
      * Mandatory empty constructor for the fragment manager to instantiate the
@@ -63,13 +64,8 @@ public class TaskDetailFragment extends Fragment {
                 .inject(this);
 
         if (getArguments() != null) {
-            if (getArguments().containsKey(ARG_ITEM_ID)) {
-                // Load the content specified by the fragment
-                // arguments.
-
-                id = getArguments().getInt(ARG_ITEM_ID);
-                mIsNewItem = false;
-            }
+            id = getArguments().getInt(ARG_ITEM_ID);
+            mIsNewItem = id == ARG_ITEM_ID_NEW_ITEM;
         }
     }
 
