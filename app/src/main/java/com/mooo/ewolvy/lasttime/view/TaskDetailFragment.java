@@ -26,7 +26,6 @@ import com.mooo.ewolvy.lasttime.R;
 import com.mooo.ewolvy.lasttime.data.TaskItem;
 import com.mooo.ewolvy.lasttime.viewmodel.TaskEditViewModel;
 
-import java.util.List;
 import java.util.Objects;
 
 import javax.inject.Inject;
@@ -86,13 +85,13 @@ public class TaskDetailFragment extends Fragment {
                     }
                     if (mItem != null) {
                         fillFields(mItem);
+                        prepareButton();
                         Activity activity = getActivity();
                         assert activity != null;
                         CollapsingToolbarLayout appBarLayout = activity.findViewById(R.id.toolbar_layout);
                         if (appBarLayout != null && mItem != null) {
                             appBarLayout.setTitle(mItem.getName());
                         }
-                        prepareButton();
                     }
                 }
             });
@@ -105,6 +104,14 @@ public class TaskDetailFragment extends Fragment {
         rootView = inflater.inflate(R.layout.task_detail, container, false);
         if (mIsNewItem) {
             prepareButton();
+        }
+        Activity activity = getActivity();
+        assert activity != null;
+        CollapsingToolbarLayout appBarLayout = activity.findViewById(R.id.toolbar_layout);
+        if (appBarLayout != null && mItem != null) {
+            appBarLayout.setTitle(mItem.getName());
+        } else if (appBarLayout != null){
+            appBarLayout.setTitle("New item");
         }
 
         return rootView;
